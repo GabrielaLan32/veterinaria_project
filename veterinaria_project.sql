@@ -1,18 +1,25 @@
 -- Drop tables if they exist
+DROP TABLE IF EXISTS persona;
 DROP TABLE IF EXISTS citas;
 DROP TABLE IF EXISTS mascotas;
 DROP TABLE IF EXISTS horarios;
 DROP TABLE IF EXISTS clientes;
 DROP TABLE IF EXISTS administradores;
 
+-- Create persona table
+CREATE TABLE personas (
+  cedula VARCHAR(10) PRIMARY KEY,
+  nombres TEXT NOT NULL,
+  apellidos TEXT NOT NULL
+);
+
 -- Create clientes table
 CREATE TABLE clientes (
   cedula VARCHAR(10) PRIMARY KEY,
-  nombres TEXT NOT NULL,
-  apellidos TEXT NOT NULL,
   direccion TEXT,
   telefono VARCHAR(10),
-  email TEXT
+  email TEXT,
+  FOREIGN KEY (cedula) REFERENCES personas(cedula)
 );
 
 -- Create mascotas table
@@ -172,10 +179,15 @@ BEGIN
 END //
 DELIMITER ;
 
-INSERT INTO clientes (cedula, nombres, apellidos, direccion, telefono, email) VALUES 
-('1234567890', 'Juan', 'Pérez', 'Calle Falsa 123', '555-1234', 'juan.perez@example.com'),
-('0987654321', 'María', 'Gómez', 'Avenida Siempre Viva 742', '555-5678', 'maria.gomez@example.com'),
-('1122334455', 'Carlos', 'López', 'Boulevard de los Sueños 456', '555-8765', 'carlos.lopez@example.com');
+INSERT INTO personas (cedula, nombres, apellidos) VALUES
+('1234567890', 'Juan', 'Pérez'),
+('0987654321', 'María', 'Gómez'),
+('1122334455', 'Carlos', 'López');
+
+INSERT INTO clientes (cedula, direccion, telefono, email) VALUES
+('1234567890', 'Calle Falsa 123', '5551234567', 'juan.perez@example.com'),
+('0987654321', 'Avenida Siempre Viva 742', '5559876543', 'maria.gomez@example.com'),
+('1122334455', 'Boulevard de los Sueños 456', '5556543210', 'carlos.lopez@example.com');
 
 INSERT INTO mascotas (cliente_cedula, nombre, tipo_animal, fecha_nacimiento, peso, raza, vacunas, observaciones) VALUES 
 ('1234567890', 'Firulais', 'perro', '2018-05-20', 10.5, 'Labrador', TRUE, 'Alergia a los ácaros'),
@@ -186,8 +198,3 @@ INSERT INTO horarios (hora, disponibilidad) VALUES
 ('09:00:00', FALSE),
 ('14:00:00', FALSE),
 ('16:00:00', FALSE);
-
-INSERT INTO citas (mascota_id, horario_id, motivo_consulta) VALUES 
-(1, 1, 'Consulta de rutina'),
-(2, 2, 'Vacunación'),
-(3, 1, 'Chequeo general');
