@@ -71,14 +71,14 @@ CREATE PROCEDURE `Sp_crear_citas`(
 	out p_citas_id bigint,
 	inout p_mascota_id bigint,
     inout p_horario_id BIGINT,
-    inout motivo_consulta TEXT
+    inout p_motivo_consulta TEXT
 )
 BEGIN
-	insert into citas(mascota_id, horario_id, motivo_consulta) values (p_mascota_id, p_horario_id, motivo_consulta) ;
+	insert into citas(mascota_id, horario_id, motivo_consulta) values (p_mascota_id, p_horario_id, p_motivo_consulta) ;
     SET p_citas_id = LAST_INSERT_ID();
     
     update horarios set disponibilidad = false where id = p_horario_id;
-END
+END //
 DELIMITER ;
 
 DELIMITER //
@@ -86,13 +86,13 @@ CREATE PROCEDURE `Sp_obtener_citas`(
 	inout p_citas_id bigint,
 	out p_mascota_id bigint,
     out p_horario_id BIGINT,
-    out motivo_consulta TEXT
+    out p_motivo_consulta TEXT
 )
 BEGIN
 	select id, mascota_id, horario_id, motivo_consulta
-    into p_citas_id, p_mascota_id, p_horario_id, motivo_consulta
+    into p_citas_id, p_mascota_id, p_horario_id, p_motivo_consulta
     from citas where id = p_citas_id;
-END
+END //
 DELIMITER ;
 
 DELIMITER //
@@ -103,9 +103,13 @@ CREATE PROCEDURE `Sp_modificar_citas`(
     inout p_motivo_consulta TEXT
 )
 BEGIN
+	declare v_horario_ant_id int;
+	select horario_id into v_horario_ant_id from citas where id = p_citas_id;
 	update citas set horario_id = p_horario_id, motivo_consulta = p_motivo_consulta
     where id = p_citas_id;
-END
+    update horarios set disponibilidad = false where id = p_horario_id;
+    update horarios set disponibilidad = true where id = v_horario_ant_id;
+END //
 DELIMITER ;
 
 DELIMITER //
@@ -117,7 +121,7 @@ CREATE PROCEDURE `Sp_eliminar_citas`(
 BEGIN
 	delete from citas where id = p_citas_id;
     update horarios set disponibilidad = true where id = p_horario_id;
-END
+END //
 DELIMITER ;
 
 DELIMITER //
