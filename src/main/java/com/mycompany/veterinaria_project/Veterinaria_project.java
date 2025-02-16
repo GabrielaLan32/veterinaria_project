@@ -13,7 +13,6 @@ import controlador.ConexionBDD;
 public class Veterinaria_project {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
         ConexionBDD conexion = new ConexionBDD();
         conexion.conectar();
     }
