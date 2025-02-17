@@ -40,9 +40,9 @@ public class HorarioControlador {
     }
     
     public HorariosModelo buscarHorario(int id) {
-        HorariosModelo hm = new HorariosModelo(0, "", false);
+        HorariosModelo hm = null;
         try {
-            String sentenciaSQL = "SELECT id, hora, disponibilidad FROM horarios" + 
+            String sentenciaSQL = "SELECT id, hora, disponibilidad FROM horarios " + 
                     "WHERE id = " + id;
             
             ejecutar = (PreparedStatement) conectado.prepareCall(sentenciaSQL);
@@ -58,7 +58,7 @@ public class HorarioControlador {
             ejecutar.close();
             return hm;
         } catch (SQLException e) {
-            System.out.println("ERROR SQL"+e);
+            System.out.println("ERROR SQL: "+e);
         }
         return null;
     }
@@ -81,7 +81,7 @@ public class HorarioControlador {
             ejecutar.close();
             return listaHorario;
         } catch (SQLException e) {
-            System.out.println("ERROR SQL"+e);
+            System.out.println("ERROR SQL: "+e);
         }
         return null;
     }

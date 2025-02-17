@@ -83,7 +83,7 @@ public class CitasControlador {
             ejecutar.close();
             return listaCitas;
         } catch (SQLException e) {
-            System.out.println("ERROR SQL"+e);
+            System.out.println("ERROR SQL: "+e);
         }
         return null;
     }

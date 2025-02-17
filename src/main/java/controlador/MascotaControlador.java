@@ -46,9 +46,9 @@ public class MascotaControlador {
     }
     
     public MascotasModelo buscarMascota(int id) {
-        MascotasModelo mm = new MascotasModelo(0, null, "", "", null, 0, "", true, "");
+        MascotasModelo mm = null;
         try {
-            String sentenciaSQL = "SELECT cliente_cedula, nombre, tipo_animal, fecha_nacimiento, peso, raza, vacunas, observaciones " +
+            String sentenciaSQL = "SELECT id, cliente_cedula, nombre, tipo_animal, fecha_nacimiento, peso, raza, vacunas, observaciones " +
                           "FROM mascotas WHERE id = " + id;
             
             ejecutar = (PreparedStatement) conectado.prepareCall(sentenciaSQL);
@@ -70,7 +70,7 @@ public class MascotaControlador {
             ejecutar.close();
             return mm;
         } catch (SQLException e) {
-            System.out.println("ERROR SQL"+e);
+            System.out.println("ERROR SQL: "+e);
         }
         return null;
     }
@@ -101,7 +101,7 @@ public class MascotaControlador {
             ejecutar.close();
             return listaMascotas;
         } catch (SQLException e) {
-            System.out.println("ERROR SQL"+e);
+            System.out.println("ERROR SQL: "+e);
         }
         return null;
     }

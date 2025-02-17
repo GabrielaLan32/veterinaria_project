@@ -84,7 +84,7 @@ public class ClientesControlador {
             ejecutar.close();
             return cm;
         } catch (SQLException e) {
-            System.out.println("ERROR SQL"+e);
+            System.out.println("ERROR SQL: "+e);
         }
         return null;
     }
@@ -114,7 +114,7 @@ public class ClientesControlador {
             ejecutar.close();
             return listaClientes;
         } catch (SQLException e) {
-            System.out.println("ERROR SQL"+e);
+            System.out.println("ERROR SQL: "+e);
         }
         return null;
     }

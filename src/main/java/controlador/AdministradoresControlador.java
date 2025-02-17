@@ -56,7 +56,7 @@ public class AdministradoresControlador {
             ejecutar.close();
             return am;
         } catch (SQLException e) {
-            System.out.println("ERROR SQL"+e);
+            System.out.println("ERROR SQL: "+e);
         }
         return null;
     }
@@ -79,7 +79,7 @@ public class AdministradoresControlador {
             ejecutar.close();
             return listaAdministradores;
         } catch (SQLException e) {
-            System.out.println("ERROR SQL"+e);
+            System.out.println("ERROR SQL: "+e);
         }
         return null;
     }
