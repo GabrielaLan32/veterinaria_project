@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import modelo.AdministradoresModelo;
 
 /**
@@ -130,9 +131,11 @@ public class AdministradoresControlador {
                     session = true;
                 } else {
                     System.out.println("Error: Contraseña incorrecta.");
+                    JOptionPane.showMessageDialog(null, "Error: Contraseña incorrecta.");
                 }
             } else {
                 System.out.println("Error: Usuario no encontrado.");
+                JOptionPane.showMessageDialog(null, "Error: Usuario no encontrado.");
             }
             
             ejecutar.close();
