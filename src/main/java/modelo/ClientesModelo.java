@@ -20,6 +20,13 @@ public class ClientesModelo extends PersonaModelo {
         this.email = email;
     }
 
+    public ClientesModelo(PersonaModelo pm, String direccion, String telefono, String email) {
+        super(pm.getCedula(), pm.getNombres(), pm.getApellidos());
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.email = email;
+    }
+
     public String getDireccion() {
         return direccion;
     }
