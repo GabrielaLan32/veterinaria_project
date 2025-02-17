@@ -6,6 +6,7 @@ package vista;
 
 import controlador.HorarioControlador;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.HorariosModelo;
 
@@ -22,6 +23,7 @@ public class HorariosVista extends javax.swing.JInternalFrame {
     HorarioControlador hc  = new HorarioControlador();
     ArrayList<HorariosModelo> listaHorarios;
     DefaultTableModel modelHorarios;
+    HorariosModelo hm;
     
     public HorariosVista() {
         initComponents();
@@ -34,8 +36,7 @@ public class HorariosVista extends javax.swing.JInternalFrame {
         for (HorariosModelo horario : listaHorarios) {
             datosFila[0] = horario.getHora();
             datosFila[1] = horario.isDisponibilidad();
-            datosFila[2] = "Editar";
-            datosFila[3] = "Eliminar";
+            datosFila[2] = "Eliminar";
             modelHorarios.addRow(datosFila);
         }
         
@@ -64,15 +65,20 @@ public class HorariosVista extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Hora", "Disponibilidad", "", ""
+                "Hora", "Disponibilidad", ""
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tblHorarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblHorariosMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblHorarios);
@@ -84,7 +90,7 @@ public class HorariosVista extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1232, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1232, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -101,7 +107,42 @@ public class HorariosVista extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tblHorariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHorariosMouseClicked
+        int row = tblHorarios.rowAtPoint(evt.getPoint());
+        int column = tblHorarios.columnAtPoint(evt.getPoint());
+        
+        if (column == 2) {
+            int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar este registro?");
+            if(confirmacion == JOptionPane.YES_OPTION) eliminarHorario(row);
+        }
+    }//GEN-LAST:event_tblHorariosMouseClicked
 
+    private void eliminarHorario(int row) {
+        hm = listaHorarios.get(row);
+        hc.eliminarHorario(hm.getId());
+        consultarHorarios();
+    }
+    
+    private void consultarHorarios() {
+        listaHorarios = hc.listarHorario();
+        System.out.println("Número de citas recuperadas: " + listaHorarios.size());
+        
+        while (modelHorarios.getRowCount() > 0) {
+            modelHorarios.removeRow(0);
+        }
+        
+        Object[] datosFila=new Object[modelHorarios.getColumnCount()];
+        
+        for (HorariosModelo horario : listaHorarios) {
+            datosFila[0] = horario.getHora();
+            datosFila[1] = horario.isDisponibilidad();
+            datosFila[2] = "Eliminar";
+            modelHorarios.addRow(datosFila);
+        }
+        
+        tblHorarios.setModel(modelHorarios);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

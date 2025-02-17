@@ -235,6 +235,8 @@ public class CitasVista extends javax.swing.JInternalFrame {
     private void eliminarCita(int row) {
         cm = listaCitas.get(row);
         cc.eliminarCitas(cm.getId());
+        limpiarTxt();
+        consultarCitas();
     }
     
     private void limpiarTxt(){
