@@ -25,7 +25,8 @@ public class CitasControlador {
     ResultSet resultado;
     
     public void insertarCitas(CitasModelo cm) {
-        String sentenciaSQL = "CALL Sp_crear_citas(@p_citas_id, " + cm.getMascota().getId() + ", " + cm.getHorario().getId()+ ", '" + cm.getMotivoConsulta() + "');";
+        String motivoConsulta = cm.getMotivoConsulta().replace("'", "''");
+        String sentenciaSQL = "CALL Sp_crear_citas(" + cm.getMascota().getId() + ", " + cm.getHorario().getId()+ ", '" + motivoConsulta + "')";
         
         try {
             ejecutar = conectado.prepareCall(sentenciaSQL);
@@ -36,7 +37,7 @@ public class CitasControlador {
                 ejecutar.close();
             }
         } catch(SQLException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
     
@@ -90,14 +91,16 @@ public class CitasControlador {
     
     public void actualizarCita(CitasModelo cm) {
         try {
-            String sentenciaSQL = "CALL Sp_modificar_citas(" + cm.getId() + ", @p_mascota_id, " + 
+            String sentenciaSQL = "CALL Sp_modificar_citas(" + cm.getId() + ", " +
                               cm.getHorario().getId() + ", '" + 
                               cm.getMotivoConsulta() + "');";
             
+            System.out.println(sentenciaSQL);
             ejecutar = conectado.prepareCall(sentenciaSQL);
             int res = ejecutar.executeUpdate();
             if(res > 0 ) {
-                System.out.println("Se ha modificado la persona");
+                JOptionPane.showMessageDialog(null,"Cita actualizada con éxito");
+                System.out.println("Se ha modificado la cita");
                 ejecutar.close();
             }
         } catch (SQLException e) {
@@ -107,10 +110,11 @@ public class CitasControlador {
     
     public void eliminarCitas(int id) {
         try {
-            String sentenciaSQL = "CALL Sp_eliminar_citas(" + id + ", @p_mascota_id, @p_horario_id);";
+            String sentenciaSQL = "CALL Sp_eliminar_citas(" + id + ");";
             ejecutar = conectado.prepareCall(sentenciaSQL);
             int res = ejecutar.executeUpdate();
             if(res > 0 ) {
+                JOptionPane.showMessageDialog(null,"Cita eliminada con éxito");
                 System.out.println("Se ha eliminado la persona");
                 ejecutar.close();
             }

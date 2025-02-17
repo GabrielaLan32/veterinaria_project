@@ -26,7 +26,7 @@ public class AdministradorVista extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jpnPrincipal = new javax.swing.JPanel();
+        jdpPrincipalAdmin = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -41,14 +41,14 @@ public class AdministradorVista extends javax.swing.JInternalFrame {
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
 
-        javax.swing.GroupLayout jpnPrincipalLayout = new javax.swing.GroupLayout(jpnPrincipal);
-        jpnPrincipal.setLayout(jpnPrincipalLayout);
-        jpnPrincipalLayout.setHorizontalGroup(
-            jpnPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jdpPrincipalAdminLayout = new javax.swing.GroupLayout(jdpPrincipalAdmin);
+        jdpPrincipalAdmin.setLayout(jdpPrincipalAdminLayout);
+        jdpPrincipalAdminLayout.setHorizontalGroup(
+            jdpPrincipalAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1256, Short.MAX_VALUE)
         );
-        jpnPrincipalLayout.setVerticalGroup(
-            jpnPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jdpPrincipalAdminLayout.setVerticalGroup(
+            jdpPrincipalAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 649, Short.MAX_VALUE)
         );
 
@@ -63,6 +63,11 @@ public class AdministradorVista extends javax.swing.JInternalFrame {
         jMenu2.add(jMenuItem1);
 
         jMenuItem2.setText("Añadir Cita");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuBar1.add(jMenu2);
@@ -70,6 +75,11 @@ public class AdministradorVista extends javax.swing.JInternalFrame {
         jMenu3.setText("Mascotas");
 
         jMenuItem5.setText("Ver Mascotas");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem5);
 
         jMenuItem6.setText("Añadir Mascota");
@@ -80,6 +90,11 @@ public class AdministradorVista extends javax.swing.JInternalFrame {
         jMenu1.setText("Clientes");
 
         jMenuItem7.setText("Ver Clientes");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem7);
 
         jMenuItem8.setText("Añadir Cliente");
@@ -90,9 +105,19 @@ public class AdministradorVista extends javax.swing.JInternalFrame {
         jMenu4.setText("Horarios");
 
         jMenuItem9.setText("Ver Horarios");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem9);
 
         jMenuItem10.setText("Añadir Horario");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem10);
 
         jMenuBar1.add(jMenu4);
@@ -105,14 +130,14 @@ public class AdministradorVista extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jpnPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jdpPrincipalAdmin)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jpnPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jdpPrincipalAdmin)
                 .addContainerGap())
         );
 
@@ -120,8 +145,46 @@ public class AdministradorVista extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+        jdpPrincipalAdmin.removeAll();
+        CitasVista cv = new CitasVista();
+        jdpPrincipalAdmin.add(cv);
+        cv.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        jdpPrincipalAdmin.removeAll();
+        MascotasVista mv = new MascotasVista();
+        jdpPrincipalAdmin.add(mv);
+        mv.show();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        jdpPrincipalAdmin.removeAll();
+        ClientesVista clv = new ClientesVista();
+        jdpPrincipalAdmin.add(clv);
+        clv.show();
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        jdpPrincipalAdmin.removeAll();
+        HorariosVista hv = new HorariosVista();
+        jdpPrincipalAdmin.add(hv);
+        hv.show();
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        jdpPrincipalAdmin.removeAll();
+        AddCitasVista acv = new AddCitasVista();
+        jdpPrincipalAdmin.add(acv);
+        acv.show();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        jdpPrincipalAdmin.removeAll();
+        AddHorarioVista ahv = new AddHorarioVista();
+        jdpPrincipalAdmin.add(ahv);
+        ahv.show();
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -138,6 +201,6 @@ public class AdministradorVista extends javax.swing.JInternalFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JPanel jpnPrincipal;
+    private javax.swing.JDesktopPane jdpPrincipalAdmin;
     // End of variables declaration//GEN-END:variables
 }

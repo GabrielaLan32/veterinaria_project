@@ -106,6 +106,37 @@ public class MascotaControlador {
         return null;
     }
     
+    public ArrayList<MascotasModelo> listarMascotasPorDueno(String cedula) {
+        ArrayList<MascotasModelo> listaMascotas = new ArrayList<>();
+        
+        try {
+            String sentenciaSQL = "SELECT id, cliente_cedula, nombre, tipo_animal, fecha_nacimiento, peso, raza, vacunas, observaciones " +
+                          "FROM mascotas WHERE cliente_cedula = " + cedula;
+            
+            ejecutar = (PreparedStatement) conectado.prepareCall(sentenciaSQL);
+            resultado = ejecutar.executeQuery();
+            
+            while (resultado.next()) {
+                listaMascotas.add(new MascotasModelo(
+                        resultado.getInt("id"),
+                        cc.buscarCliente(resultado.getString("cliente_cedula")),
+                        resultado.getString("nombre"),
+                        resultado.getString("tipo_animal"),
+                        resultado.getDate("fecha_nacimiento"),
+                        resultado.getDouble("peso"),
+                        resultado.getString("raza"),
+                        resultado.getBoolean("vacunas"),
+                        resultado.getString("observaciones")
+                ));
+            }
+            ejecutar.close();
+            return listaMascotas;
+        } catch (SQLException e) {
+            System.out.println("ERROR SQL: "+e);
+        }
+        return null;
+    }
+    
     public void actualizarMascota(MascotasModelo mm){
         try {
             String sentenciaSQL = "UPDATE mascotas SET " +

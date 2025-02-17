@@ -75,15 +75,12 @@ CREATE TABLE aud_citas (
 
 DELIMITER //
 CREATE PROCEDURE `Sp_crear_citas`(
-	out p_citas_id bigint,
-	inout p_mascota_id bigint,
-    inout p_horario_id BIGINT,
-    inout p_motivo_consulta TEXT
+	in p_mascota_id bigint,
+    in p_horario_id BIGINT,
+    in p_motivo_consulta TEXT
 )
 BEGIN
-	insert into citas(mascota_id, horario_id, motivo_consulta) values (p_mascota_id, p_horario_id, p_motivo_consulta) ;
-    SET p_citas_id = LAST_INSERT_ID();
-    
+	insert into citas(mascota_id, horario_id, motivo_consulta) values (p_mascota_id, p_horario_id, p_motivo_consulta);
     update horarios set disponibilidad = false where id = p_horario_id;
 END //
 DELIMITER ;
@@ -104,10 +101,9 @@ DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE `Sp_modificar_citas`(
-	inout p_citas_id bigint,
-	out p_mascota_id bigint,
-    inout p_horario_id BIGINT,
-    inout p_motivo_consulta TEXT
+	in p_citas_id bigint,
+    in p_horario_id BIGINT,
+    in p_motivo_consulta TEXT
 )
 BEGIN
 	declare v_horario_ant_id int;
@@ -121,13 +117,17 @@ DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE `Sp_eliminar_citas`(
-	inout p_citas_id bigint,
-	out p_mascota_id bigint,
-    out p_horario_id BIGINT
+	in p_citas_id bigint
 )
 BEGIN
-	delete from citas where id = p_citas_id;
-    update horarios set disponibilidad = true where id = p_horario_id;
+	declare v_horario_ant_id int;
+	select horario_id into v_horario_ant_id from citas where id = p_citas_id;
+	update citas set horario_id = p_horario_id, motivo_consulta = p_motivo_consulta
+    where id = p_citas_id;
+    update horarios set disponibilidad = false where id = p_horario_id;
+    IF v_horario_ant_id <> p_horario_id THEN
+		update horarios set disponibilidad = true where id = v_horario_ant_id;
+	END IF;
 END //
 DELIMITER ;
 
@@ -195,6 +195,8 @@ INSERT INTO mascotas (cliente_cedula, nombre, tipo_animal, fecha_nacimiento, pes
 ('1122334455', 'Rex', 'perro', '2019-11-30', 25.0, 'Pastor Alemán', FALSE, 'Problemas de cadera');
 
 INSERT INTO horarios (hora, disponibilidad) VALUES 
-('09:00:00', FALSE),
-('14:00:00', FALSE),
-('16:00:00', FALSE);
+('09:00:00', TRUE),
+('14:00:00', TRUE),
+('16:00:00', TRUE);
+
+INSERT INTO administradores (usuario, contrasena) VALUES ('admin', 'admin');

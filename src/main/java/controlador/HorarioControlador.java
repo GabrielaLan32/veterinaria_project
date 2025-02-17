@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import modelo.HorariosModelo;
 
 /**
@@ -32,6 +33,7 @@ public class HorarioControlador {
             int res = ejecutar.executeUpdate();
             if(res > 0 ) {
                 System.out.println("Se ha añadido el horario");
+                JOptionPane.showMessageDialog(null,"Horario creado con éxito");
                 ejecutar.close();
             }
         } catch(SQLException e) {
@@ -68,6 +70,29 @@ public class HorarioControlador {
         
         try {
             String sentenciaSQL = "SELECT id, hora, disponibilidad FROM horarios;";
+            
+            ejecutar = (PreparedStatement) conectado.prepareCall(sentenciaSQL);
+            resultado = ejecutar.executeQuery();
+            
+            while (resultado.next()) {
+                listaHorario.add(new HorariosModelo(
+                        resultado.getInt("id"), 
+                        resultado.getString("hora"), 
+                        resultado.getBoolean("disponibilidad")));
+            }
+            ejecutar.close();
+            return listaHorario;
+        } catch (SQLException e) {
+            System.out.println("ERROR SQL: "+e);
+        }
+        return null;
+    }
+    
+    public ArrayList<HorariosModelo> listarHorariosDisponibles() {
+        ArrayList<HorariosModelo> listaHorario = new ArrayList<>();
+        
+        try {
+            String sentenciaSQL = "SELECT id, hora, disponibilidad FROM horarios WHERE disponibilidad = true;";
             
             ejecutar = (PreparedStatement) conectado.prepareCall(sentenciaSQL);
             resultado = ejecutar.executeQuery();
