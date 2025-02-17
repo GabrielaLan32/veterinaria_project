@@ -83,6 +83,11 @@ public class AdministradorVista extends javax.swing.JInternalFrame {
         jMenu3.add(jMenuItem5);
 
         jMenuItem6.setText("Añadir Mascota");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem6);
 
         jMenuBar1.add(jMenu3);
@@ -98,6 +103,11 @@ public class AdministradorVista extends javax.swing.JInternalFrame {
         jMenu1.add(jMenuItem7);
 
         jMenuItem8.setText("Añadir Cliente");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem8);
 
         jMenuBar1.add(jMenu1);
@@ -185,6 +195,20 @@ public class AdministradorVista extends javax.swing.JInternalFrame {
         jdpPrincipalAdmin.add(ahv);
         ahv.show();
     }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        jdpPrincipalAdmin.removeAll();
+        AddClientesVista acv = new AddClientesVista();
+        jdpPrincipalAdmin.add(acv);
+        acv.show();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        jdpPrincipalAdmin.removeAll();
+        AddMascotasVista amv = new AddMascotasVista();
+        jdpPrincipalAdmin.add(amv);
+        amv.show();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
